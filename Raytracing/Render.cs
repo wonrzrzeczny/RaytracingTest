@@ -51,12 +51,12 @@ namespace Raytracing
                     // Get a pointer to the back buffer.
                     int pBackBuffer = (int)bitmap.BackBuffer;
 
-                    for (int i = 0; i < XRes; i++)
+                    for (int i = 0; i < YRes; i++)
                     {
-                        for (int j = 0; j < YRes; j++)
+                        for (int j = 0; j < XRes; j++)
                         {
                             // Compute the pixel's color.
-                            Color color = camera.renderPixel(i, j);
+                            Color color = camera.renderPixel(j, i);
                             int color_data = (color.R << 16) + (color.G << 8) + color.B;// (colorArray[i, j].R << 16) + (colorArray[i, j].G << 8) + colorArray[i, j].B;
 
                             // Assign the color data to the pixel.

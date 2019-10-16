@@ -1,5 +1,4 @@
 ﻿using Raytracing.Algebra;
-using System.Windows.Media;
 
 namespace Raytracing.Surfaces
 {

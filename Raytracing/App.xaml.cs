@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Raytracing.Algebra;
+using Raytracing.Surfaces;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -23,8 +25,10 @@ namespace Raytracing
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
             scene = new Scene(new Color(255, 255, 255));
-            camera = new Camera(new Algebra.Vector3(0, 0, 0), 80, scene);
-            render = new Render(camera, 640, 480);
+            scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), new SurfaceAbsorptive()));
+            scene.addSurface(new Surface(new SurfacePlane(Vector3.Right, Vector3.Forward, Vector3.Up), new SurfaceAbsorptive()));
+            camera = new Camera(new Vector3(0, 0, 0), 80, scene);
+            render = new Render(camera, 320, 240);
 
             MainWindow window = new MainWindow();
             window.Content = render.renderImage;
@@ -36,10 +40,11 @@ namespace Raytracing
         
         void Update()
         {
+            Dispatcher.Invoke(render.renderScene);
+            Thread.Sleep(10);
             while (true)
             {
-                Dispatcher.Invoke(render.renderScene);
-                Thread.Sleep(10);
+
             }
         }
     }

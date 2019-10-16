@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Windows.Media;
+﻿using System;
+using System.Collections.Generic;
 using Raytracing.Algebra;
 using Raytracing.Surfaces;
 
@@ -30,11 +30,14 @@ namespace Raytracing
             foreach (Surface surface in surfaces)
             {
                 CollisionInfo collision = surface.Geometry.calculateCollision(ray);
-                double newDistance = Vector3.ManhattanDistance(ray.Origin, collision.HitPoint);
-                if (distance > newDistance)
+                if (collision.Occured)
                 {
-                    distance = newDistance;
-                    firstCollision = collision;
+                    double newDistance = Vector3.ManhattanDistance(ray.Origin, collision.HitPoint);
+                    if (distance > newDistance)
+                    {
+                        distance = newDistance;
+                        firstCollision = collision;
+                    }
                 }
             }
 

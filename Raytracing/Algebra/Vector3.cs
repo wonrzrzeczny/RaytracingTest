@@ -34,6 +34,30 @@ namespace Raytracing.Algebra
             }
         }
 
+        public static Vector3 Forward
+        {
+            get
+            {
+                return new Vector3(0, 0, 1);
+            }
+        }
+
+        public static Vector3 Right
+        {
+            get
+            {
+                return new Vector3(1, 0, 0);
+            }
+        }
+
+        public static Vector3 Up
+        {
+            get
+            {
+                return new Vector3(0, 1, 0);
+            }
+        }
+
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
             return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
@@ -44,6 +68,11 @@ namespace Raytracing.Algebra
             return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
         }
 
+        public static Vector3 operator *(double d, Vector3 a)
+        {
+            return new Vector3(d * a.x, d * a.y, d * a.z);
+        }
+
         public static Vector3 operator -(Vector3 v)
         {
             return new Vector3(-v.x, -v.y, -v.z);
@@ -52,6 +81,17 @@ namespace Raytracing.Algebra
         public static double Dot(Vector3 a, Vector3 b)
         {
             return a.x * b.x + a.y * b.y + a.z * b.z;
+        }
+
+        public static Vector3 Cross(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+        }
+
+        public Vector3 normalized()
+        {
+            double mag = magnitude();
+            return new Vector3(x / mag, y / mag, z / mag);
         }
 
         public static double Distance(Vector3 a, Vector3 b)
