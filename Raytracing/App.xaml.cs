@@ -26,7 +26,7 @@ namespace Raytracing
         {
             scene = new Scene(new Color(255, 255, 255));
             scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), new SurfaceAbsorptive()));
-            scene.addSurface(new Surface(new SurfacePlane(Vector3.Right, Vector3.Forward, Vector3.Up), new SurfaceAbsorptive()));
+            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(10, 10, 30), 2), new SurfaceAbsorptive()));
             camera = new Camera(new Vector3(0, 0, 0), 80, scene);
             render = new Render(camera, 320, 240);
 
