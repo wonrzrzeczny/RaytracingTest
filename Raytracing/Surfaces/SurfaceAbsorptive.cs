@@ -5,9 +5,17 @@ namespace Raytracing.Surfaces
 {
     public class SurfaceAbsorptive : SurfaceMaterial
     {
-        public override Color propagateRay(Ray ray, Vector3 position, Vector3 normal)
+        private readonly Color color;
+
+        public SurfaceAbsorptive(Color color)
         {
-            return new Color(150, 150, 150);
+            this.color = color;
+        }
+
+        public override Color propagateRay(Ray ray, Vector3 position, Vector3 normal, int generation)
+        {
+            Console.WriteLine("Solid surface hit, color: " + color.ToString());
+            return color;
         }
     }
 }

@@ -16,5 +16,10 @@ namespace Raytracing.Algebra
             Origin = origin;
             Direction = direction;
         }
+
+        public override string ToString()
+        {
+            return Origin + " -> " + Direction;
+        }
     }
 }

@@ -22,13 +22,29 @@ namespace Raytracing
         Camera camera;
         Thread updateThread;
 
+        public const int resX = 320;
+        public const int resY = 160;
+
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
+            Console.WriteLine(Vector3.Forward.reflect(new Vector3(1, 1, 1)));
+
+            Random random = new Random();
             scene = new Scene(new Color(255, 255, 255));
-            scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), new SurfaceAbsorptive()));
-            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(10, 10, 30), 2), new SurfaceAbsorptive()));
-            camera = new Camera(new Vector3(0, 0, 0), 80, scene);
-            render = new Render(camera, 320, 240);
+
+            SurfaceMaterial solid = new SurfaceAbsorptive(new Color(128, 128, 128));
+            SurfaceMaterial solidRed = new SurfaceAbsorptive(new Color(255, 128, 128));
+            SurfaceMaterial solidBlue = new SurfaceAbsorptive(new Color(128, 128, 255));
+            SurfaceMaterial reflective = new SurfaceReflective(scene);
+            SurfaceMaterial hybrid = new SurfaceMaterialProduct(solid, reflective, new Vector3(0.2, 0.2, 0.2));
+            SurfaceMaterial hybridRed = new SurfaceMaterialProduct(solidRed, reflective, new Vector3(0.2, 0.2, 0.2));
+            SurfaceMaterial hybridBlue = new SurfaceMaterialProduct(solidBlue, reflective, new Vector3(0.2, 0.2, 0.2));
+
+            scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), hybrid));
+            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(-20, 10, 50), 4), hybridRed));
+            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(20, 10, 50), 4), hybridBlue));
+            camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);
+            render = new Render(camera, resX, resY);
 
             MainWindow window = new MainWindow();
             window.Content = render.renderImage;

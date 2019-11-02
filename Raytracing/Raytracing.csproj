@@ -68,7 +68,9 @@
     <Compile Include="Surfaces\SurfaceAbsorptive.cs" />
     <Compile Include="Surfaces\SurfaceGeometry.cs" />
     <Compile Include="Surfaces\SurfaceMaterial.cs" />
+    <Compile Include="Surfaces\SurfaceMaterialProduct.cs" />
     <Compile Include="Surfaces\SurfacePlane.cs" />
+    <Compile Include="Surfaces\SurfaceReflective.cs" />
     <Compile Include="Surfaces\SurfaceSphere.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

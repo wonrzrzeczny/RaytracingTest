@@ -7,6 +7,8 @@ namespace Raytracing
 {
     public class Scene
     {
+        public const int MAX_GENERATIONS = 8;
+
         private readonly List<Surface> surfaces;
         private readonly Color skyColor;
 
@@ -23,8 +25,10 @@ namespace Raytracing
         }
 
 
-        public Color castRay(Ray ray)
+        public Color castRay(Ray ray, int generation)
         {
+            Console.WriteLine("Generation " + generation.ToString() + " Ray: " + ray.ToString());
+
             CollisionInfo firstCollision = null;
             double distance = double.PositiveInfinity;
             foreach (Surface surface in surfaces)
@@ -44,8 +48,10 @@ namespace Raytracing
             if (firstCollision == null)
                 return skyColor;
 
+            if (generation > MAX_GENERATIONS)
+                return new Color(0, 0, 0);
             return firstCollision.HitSurface.Material.propagateRay(
-                ray, firstCollision.HitPoint, firstCollision.HitSurface.Geometry.calculateNormal(firstCollision.HitPoint));
+                ray, firstCollision.HitPoint, firstCollision.HitSurface.Geometry.calculateNormal(firstCollision.HitPoint), generation + 1);
         }
     }
 }

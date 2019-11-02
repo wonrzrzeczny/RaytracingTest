@@ -58,6 +58,19 @@ namespace Raytracing.Algebra
             }
         }
 
+        public static Vector3 One
+        {
+            get
+            {
+                return new Vector3(1, 1, 1);
+            }
+        }
+
+        public override string ToString()
+        {
+            return "(" + x + ", " + y + ", " + z + ")";
+        }
+
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
             return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
@@ -92,6 +105,18 @@ namespace Raytracing.Algebra
         {
             double mag = magnitude();
             return new Vector3(x / mag, y / mag, z / mag);
+        }
+
+        public Vector3 project(Vector3 v)
+        {
+            double mag = magnitude();
+            return (Dot(this, v) / (mag * mag)) * this;
+        }
+        
+        public Vector3 reflect(Vector3 v)
+        {
+            Vector3 w = project(v);
+            return 2 * w - v;
         }
 
         public static double Distance(Vector3 a, Vector3 b)
