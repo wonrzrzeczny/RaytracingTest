@@ -43,7 +43,7 @@ namespace Raytracing
         
         public Color renderPixel(int x, int y)
         {
-            Console.WriteLine("\nCast: " + x.ToString() + " " + y.ToString());
+            //Console.WriteLine("\nCast: " + x.ToString() + " " + y.ToString());
             return scene.castRay(new Ray(Position, pixelRayDirections[x, y]), 0);
         }
     }

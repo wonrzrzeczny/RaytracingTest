@@ -9,8 +9,10 @@ namespace Raytracing.Surfaces
 {
     public class SurfaceSphere : SurfaceGeometry
     {
-        private double radius;
+        private readonly double radius;
         private Vector3 center;
+
+        private const double PRECISION = 1e-5;
 
         public SurfaceSphere(Vector3 center, double radius)
         {
@@ -33,11 +35,15 @@ namespace Raytracing.Surfaces
             double delta = b * b - 4 * a * c;
             if (delta < double.Epsilon)
                 return new CollisionInfo(false, null, null);
-            double t = Math.Sqrt((-b + Math.Sqrt(delta)) / (2 * a));
-            if (t < double.Epsilon)
-                return new CollisionInfo(false, null, null);
+            double sdelta = Math.Sqrt(delta);
+            double t1 = (-b - sdelta) / (2 * a);
+            double t2 = (-b + sdelta) / (2 * a);
+            if (t1 > PRECISION)
+                return new CollisionInfo(true, ray.Origin + t1 * ray.Direction, Surface);
+            if (t2 > PRECISION)
+                return new CollisionInfo(true, ray.Origin + t2 * ray.Direction, Surface);
 
-            return new CollisionInfo(true, ray.Origin + t * ray.Direction, Surface);
+            return new CollisionInfo(false, null, null);
         }
 
         public override Vector3 calculateNormal(Vector3 point)

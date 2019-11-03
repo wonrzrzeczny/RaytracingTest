@@ -22,13 +22,11 @@ namespace Raytracing
         Camera camera;
         Thread updateThread;
 
-        public const int resX = 320;
-        public const int resY = 160;
+        public const int resX = 1280;
+        public const int resY = 720;
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
-            Console.WriteLine(Vector3.Forward.reflect(new Vector3(1, 1, 1)));
-
             Random random = new Random();
             scene = new Scene(new Color(255, 255, 255));
 
@@ -41,8 +39,18 @@ namespace Raytracing
             SurfaceMaterial hybridBlue = new SurfaceMaterialProduct(solidBlue, reflective, new Vector3(0.2, 0.2, 0.2));
 
             scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), hybrid));
-            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(-20, 10, 50), 4), hybridRed));
-            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(20, 10, 50), 4), hybridBlue));
+            //scene.addSurface(new Surface(new SurfaceSphere(new Vector3(-10, 10, 30), 4), hybridRed));
+            //scene.addSurface(new Surface(new SurfaceSphere(new Vector3(10, 10, 30), 4), hybridBlue));
+            for (int i = 0; i < 4; i++)
+            {
+                scene.addSurface(new Surface
+                                    (new SurfaceSphere
+                                        (new Vector3(random.Next(-50, 50), random.Next(5, 25), random.Next(60, 80)), random.Next(4, 14)),
+                                     new SurfaceMaterialProduct
+                                        (new SurfaceAbsorptive(new Color((byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256))), 
+                                            reflective, 0.3 * Vector3.One)));
+            }
+
             camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);
             render = new Render(camera, resX, resY);
 

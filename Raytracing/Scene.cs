@@ -27,7 +27,7 @@ namespace Raytracing
 
         public Color castRay(Ray ray, int generation)
         {
-            Console.WriteLine("Generation " + generation.ToString() + " Ray: " + ray.ToString());
+            //Console.WriteLine("Generation " + generation.ToString() + " Ray: " + ray.ToString());
 
             CollisionInfo firstCollision = null;
             double distance = double.PositiveInfinity;

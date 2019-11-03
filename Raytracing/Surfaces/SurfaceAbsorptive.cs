@@ -14,7 +14,6 @@ namespace Raytracing.Surfaces
 
         public override Color propagateRay(Ray ray, Vector3 position, Vector3 normal, int generation)
         {
-            Console.WriteLine("Solid surface hit, color: " + color.ToString());
             return color;
         }
     }
