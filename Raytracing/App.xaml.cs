@@ -38,9 +38,11 @@ namespace Raytracing
             SurfaceMaterial hybridRed = new SurfaceMaterialProduct(solidRed, reflective, new Vector3(0.2, 0.2, 0.2));
             SurfaceMaterial hybridBlue = new SurfaceMaterialProduct(solidBlue, reflective, new Vector3(0.2, 0.2, 0.2));
 
-            scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), hybrid));
-            //scene.addSurface(new Surface(new SurfaceSphere(new Vector3(-10, 10, 30), 4), hybridRed));
-            //scene.addSurface(new Surface(new SurfaceSphere(new Vector3(10, 10, 30), 4), hybridBlue));
+            scene.addSurface(new Surface(new SurfaceFloor(-10, -500, 500, -500, 500), hybrid));
+
+            //This gives the same effect as SurfaceFloor above, but is much slower
+            //scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), hybrid));
+
             for (int i = 0; i < 4; i++)
             {
                 scene.addSurface(new Surface
