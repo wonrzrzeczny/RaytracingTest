@@ -14,6 +14,13 @@ namespace Raytracing.Surfaces
             this.blend = blend;
         }
 
+        public SurfaceMaterialProduct(SurfaceMaterial original, SurfaceMaterial additional, double blend)
+        {
+            this.original = original;
+            this.additional = additional;
+            this.blend = blend * Vector3.One;
+        }
+
         public override Color propagateRay(Ray ray, Vector3 position, Vector3 normal, int generation)
         {
             Color co = original.propagateRay(ray, position, normal, generation);

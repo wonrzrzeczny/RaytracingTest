@@ -30,6 +30,7 @@ namespace Raytracing
             //Console.WriteLine("Generation " + generation.ToString() + " Ray: " + ray.ToString());
 
             CollisionInfo firstCollision = null;
+            Surface hitSurface = null;
             double distance = double.PositiveInfinity;
             foreach (Surface surface in surfaces)
             {
@@ -41,6 +42,7 @@ namespace Raytracing
                     {
                         distance = newDistance;
                         firstCollision = collision;
+                        hitSurface = surface;
                     }
                 }
             }
@@ -50,8 +52,8 @@ namespace Raytracing
 
             if (generation > MAX_GENERATIONS)
                 return new Color(0, 0, 0);
-            return firstCollision.HitSurface.Material.propagateRay(
-                ray, firstCollision.HitPoint, firstCollision.HitSurface.Geometry.calculateNormal(firstCollision.HitPoint), generation + 1);
+            return hitSurface.Material.propagateRay(
+                ray, firstCollision.HitPoint, hitSurface.Geometry.calculateNormal(firstCollision.HitPoint), generation + 1);
         }
     }
 }

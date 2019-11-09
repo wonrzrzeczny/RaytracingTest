@@ -7,13 +7,11 @@ namespace Raytracing
     {
         public bool Occured { get; }
         public Vector3 HitPoint { get; }
-        public Surface HitSurface { get; }
 
-        public CollisionInfo(bool occured, Vector3 hitPoint, Surface hitSurface)
+        public CollisionInfo(bool occured, Vector3 hitPoint)
         {
             Occured = occured;
             HitPoint = hitPoint;
-            HitSurface = hitSurface;
         }
     }
 }

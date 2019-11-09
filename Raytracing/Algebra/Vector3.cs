@@ -9,6 +9,7 @@ namespace Raytracing.Algebra
     public class Vector3
     {
         public double x, y, z;
+
         public Vector3()
         {
             x = y = z = 0;
@@ -24,6 +25,11 @@ namespace Raytracing.Algebra
         public double magnitude()
         {
             return Math.Sqrt(x * x + y * y + z * z);
+        }
+
+        public double sqrMagnitude()
+        {
+            return x * x + y * y + z * z;
         }
 
         public static Vector3 Zero

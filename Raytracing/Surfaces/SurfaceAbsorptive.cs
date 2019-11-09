@@ -12,7 +12,7 @@ namespace Raytracing.Surfaces
             this.color = color;
         }
 
-        public override Color propagateRay(Ray ray, Vector3 position, Vector3 normal, int generation)
+        public override Color propagateRay(Ray ray, Vector3 hitPosition, Vector3 normal, int generation)
         {
             return color;
         }

@@ -38,6 +38,14 @@ namespace Raytracing
             SurfaceMaterial hybridRed = new SurfaceMaterialProduct(solidRed, reflective, new Vector3(0.2, 0.2, 0.2));
             SurfaceMaterial hybridBlue = new SurfaceMaterialProduct(solidBlue, reflective, new Vector3(0.2, 0.2, 0.2));
 
+            //80% transparent, 10% reflective, 10% absorptive
+            SurfaceMaterial glass = new SurfaceMaterialProduct(new SurfaceTransparent(scene),
+                new SurfaceMaterialProduct(new SurfaceReflective(scene), new SurfaceAbsorptive(new Color(0, 0, 0)), 0.5), 0.2);
+            //Red glass
+            SurfaceMaterial redGlass = new SurfaceMaterialProduct(new SurfaceTransparent(scene), new SurfaceAbsorptive(new Color(0, 0, 0)),
+                new Vector3(0, 1, 1)); //We specify that only red channel is affected by transparent material
+
+
             scene.addSurface(new Surface(new SurfaceFloor(-10, -500, 500, -500, 500), hybrid));
 
             //This gives the same effect as SurfaceFloor above, but is much slower
@@ -50,8 +58,10 @@ namespace Raytracing
                                         (new Vector3(random.Next(-50, 50), random.Next(5, 25), random.Next(60, 80)), random.Next(4, 14)),
                                      new SurfaceMaterialProduct
                                         (new SurfaceAbsorptive(new Color((byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256))), 
-                                            reflective, 0.3 * Vector3.One)));
+                                            reflective, 0.3)));
             }
+
+            scene.addSurface(new Surface(new SurfaceSphere(50 * Vector3.Forward, 10), glass));
 
             camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);
             render = new Render(camera, resX, resY);

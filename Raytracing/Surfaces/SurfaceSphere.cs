@@ -9,7 +9,7 @@ namespace Raytracing.Surfaces
 {
     public class SurfaceSphere : SurfaceGeometry
     {
-        private readonly double radius;
+        private readonly double radiusSquared;
         private Vector3 center;
 
         private const double PRECISION = 1e-5;
@@ -17,11 +17,14 @@ namespace Raytracing.Surfaces
         public SurfaceSphere(Vector3 center, double radius)
         {
             this.center = center;
-            this.radius = radius;
+            radiusSquared = radius * radius;
         }
 
         public override CollisionInfo calculateCollision(Ray ray)
         {
+            if ((ray.Origin - center).sqrMagnitude() < radiusSquared)
+                return new CollisionInfo(false, null);
+
             double ox = ray.Origin.x - center.x;
             double oy = ray.Origin.y - center.y;
             double oz = ray.Origin.z - center.z;
@@ -31,19 +34,19 @@ namespace Raytracing.Surfaces
 
             double a = dx * dx + dy * dy + dz * dz;
             double b = 2 * (ox * dx + oy * dy + oz * dz);
-            double c = ox * ox + oy * oy + oz * oz - radius * radius;
+            double c = ox * ox + oy * oy + oz * oz - radiusSquared;
             double delta = b * b - 4 * a * c;
             if (delta < double.Epsilon)
-                return new CollisionInfo(false, null, null);
+                return new CollisionInfo(false, null);
             double sdelta = Math.Sqrt(delta);
             double t1 = (-b - sdelta) / (2 * a);
             double t2 = (-b + sdelta) / (2 * a);
             if (t1 > PRECISION)
-                return new CollisionInfo(true, ray.Origin + t1 * ray.Direction, Surface);
+                return new CollisionInfo(true, ray.Origin + t1 * ray.Direction);
             if (t2 > PRECISION)
-                return new CollisionInfo(true, ray.Origin + t2 * ray.Direction, Surface);
+                return new CollisionInfo(true, ray.Origin + t2 * ray.Direction);
 
-            return new CollisionInfo(false, null, null);
+            return new CollisionInfo(false, null);
         }
 
         public override Vector3 calculateNormal(Vector3 point)

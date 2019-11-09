@@ -8,7 +8,6 @@
         public Surface(SurfaceGeometry geometry, SurfaceMaterial material)
         {
             Geometry = geometry;
-            Geometry.Surface = this;
             Material = material;
         }
     }

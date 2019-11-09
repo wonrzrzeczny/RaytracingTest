@@ -30,9 +30,9 @@ namespace Raytracing.Surfaces
 
             double t = (matrix.inverse() * (origin - ray.Origin)).x;
             if (t < double.Epsilon)
-                return new CollisionInfo(false, null, null);
+                return new CollisionInfo(false, null);
 
-            return new CollisionInfo(true, ray.Origin + t * ray.Direction, Surface);
+            return new CollisionInfo(true, ray.Origin + t * ray.Direction);
         }
 
         public override Vector3 calculateNormal(Vector3 point)
