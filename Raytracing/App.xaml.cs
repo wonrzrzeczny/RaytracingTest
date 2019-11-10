@@ -46,9 +46,9 @@ namespace Raytracing
                 new Vector3(0, 1, 1)); //We specify that only red channel is affected by transparent material
 
 
-            scene.addSurface(new Surface(new SurfaceFloor(-10, -500, 500, -500, 500), hybrid));
+            //scene.addSurface(new Surface(new SurfaceFloor(-10, -500, 500, -500, 500), hybrid));
             //This gives the same effect as SurfaceFloor above, but is much slower
-            //scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), hybrid));
+            scene.addSurface(new Surface(new SurfacePlane(-10 * Vector3.Up, Vector3.Forward, Vector3.Right), hybrid));
 
             for (int i = 0; i < 4; i++)
             {
