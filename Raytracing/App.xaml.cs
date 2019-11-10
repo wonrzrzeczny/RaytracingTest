@@ -47,7 +47,6 @@ namespace Raytracing
 
 
             scene.addSurface(new Surface(new SurfaceFloor(-10, -500, 500, -500, 500), hybrid));
-
             //This gives the same effect as SurfaceFloor above, but is much slower
             //scene.addSurface(new Surface(new SurfacePlane(-Vector3.Up, Vector3.Forward, Vector3.Right), hybrid));
 
@@ -58,7 +57,7 @@ namespace Raytracing
                                         (new Vector3(random.Next(-50, 50), random.Next(5, 25), random.Next(60, 80)), random.Next(4, 14)),
                                      new SurfaceMaterialProduct
                                         (new SurfaceAbsorptive(new Color((byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256))), 
-                                            reflective, 0.3)));
+                                            reflective, 0.25)));
             }
 
             scene.addSurface(new Surface(new SurfaceSphere(50 * Vector3.Forward, 10), glass));

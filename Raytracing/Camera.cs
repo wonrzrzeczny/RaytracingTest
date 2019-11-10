@@ -18,14 +18,14 @@ namespace Raytracing
         private void calculateRayDirections()
         {
             pixelRayDirections = new Vector3[resolutionX, resolutionY];
-            double FOVvertical = FOV * resolutionY / resolutionX;
+            double shiftMagnitude = 2 * Math.Tan(FOV * Math.PI / 360) / resolutionX * Direction.magnitude();
+            Vector3 horizontalShift = shiftMagnitude * Vector3.Cross(Direction, Vector3.Up).normalized();
+            Vector3 verticalShift = shiftMagnitude * Vector3.Cross(Direction, horizontalShift).normalized();
             for (int x = 0; x < resolutionX; x++)
             {
                 for (int y = 0; y < resolutionY; y++)
                 {
-                    double angleH = Math.PI / 180 * FOV * (x - resolutionX / 2) / resolutionX;
-                    double angleV = Math.PI / 180 * FOVvertical * (y - resolutionY / 2) / resolutionY;
-                    pixelRayDirections[x, y] = Matrix4.BasicRotationX(angleV) * Matrix4.BasicRotationY(angleH) * Vector3.Forward;
+                    pixelRayDirections[x, y] = Direction + (x - resolutionX / 2) * horizontalShift + (y - resolutionY / 2) * verticalShift;
                 }
             }
         }
