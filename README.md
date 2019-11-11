@@ -46,4 +46,4 @@ TODO list
 ---------
 - meshes
 - shading and more materials
-- calculating stuff on GPU (and other optimisation)
+- calculating stuff on GPU (and other optimisations)
