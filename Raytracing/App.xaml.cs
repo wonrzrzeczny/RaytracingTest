@@ -43,10 +43,6 @@ namespace Raytracing
         {
             Dispatcher.Invoke(render.renderScene);
             Thread.Sleep(10);
-            while (true)
-            {
-
-            }
         }
     }
 }
