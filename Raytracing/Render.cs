@@ -13,8 +13,8 @@ namespace Raytracing
     //Fast pixel by pixel render
     public class Render
     {
-        public Image renderImage;
-        public Color[,] colorArray;
+        public Image RenderImage { get; private set; }
+        private readonly Color[,] colorArray;
 
         private WriteableBitmap bitmap;
         private readonly Camera camera;
@@ -24,9 +24,9 @@ namespace Raytracing
 
         public Render(Camera camera, int xRes, int yRes)
         {
-            renderImage = new Image();
+            RenderImage = new Image();
             bitmap = new WriteableBitmap(xRes, yRes, 96.0, 96.0, PixelFormats.Bgr32, null);
-            renderImage.Source = bitmap;
+            RenderImage.Source = bitmap;
             colorArray = new Color[xRes, yRes];
             this.camera = camera;
             XRes = xRes;

@@ -20,10 +20,9 @@ namespace Raytracing
         Render render;
         Scene scene;
         Camera camera;
-        Thread updateThread;
 
-        public const int resX = 640;
-        public const int resY = 480;
+        public const int resX = 1280;
+        public const int resY = 720;
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
@@ -32,17 +31,10 @@ namespace Raytracing
             render = new Render(camera, resX, resY);
 
             MainWindow window = new MainWindow();
-            window.Content = render.renderImage;
+            window.Content = render.RenderImage;
             window.Show();
 
-            updateThread = new Thread(new ThreadStart(Update));
-            updateThread.Start();
-        }
-        
-        void Update()
-        {
-            Dispatcher.Invoke(render.renderScene);
-            Thread.Sleep(10);
+            render.renderScene();
         }
     }
 }

@@ -4,8 +4,6 @@ using Raytracing.Algebra;
 namespace Raytracing.Surfaces
 {
     //Rectangular region parallel to XZ plane with sides parallel to OX and OZ
-    //SurfaceFloor is approximately 10 times faster than SurfacePlane,
-    //which uses matrix inversion operations, which is extremely slow
     public class SurfaceFloor : SurfaceGeometry
     {
         private readonly double y, x1, x2, z1, z2;
