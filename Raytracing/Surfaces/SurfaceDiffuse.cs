@@ -3,11 +3,11 @@ using Raytracing.Algebra;
 
 namespace Raytracing.Surfaces
 {
-    public class SurfaceAbsorptive : SurfaceMaterial
+    public class SurfaceDiffuse : SurfaceMaterial
     {
         private readonly Color color;
 
-        public SurfaceAbsorptive(Color color)
+        public SurfaceDiffuse(Color color)
         {
             this.color = color;
         }

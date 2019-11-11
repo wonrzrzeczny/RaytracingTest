@@ -19,8 +19,8 @@ namespace Raytracing
         {
             pixelRayDirections = new Vector3[resolutionX, resolutionY];
             double shiftMagnitude = 2 * Math.Tan(FOV * Math.PI / 360) / resolutionX * Direction.magnitude();
-            Vector3 horizontalShift = shiftMagnitude * Vector3.Cross(Direction, Vector3.Up).normalized();
-            Vector3 verticalShift = shiftMagnitude * Vector3.Cross(Direction, horizontalShift).normalized();
+            Vector3 horizontalShift = - shiftMagnitude * Vector3.Cross(Direction, Vector3.Up).normalized();
+            Vector3 verticalShift = - shiftMagnitude * Vector3.Cross(Direction, horizontalShift).normalized();
             for (int x = 0; x < resolutionX; x++)
             {
                 for (int y = 0; y < resolutionY; y++)
