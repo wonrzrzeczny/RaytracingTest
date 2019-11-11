@@ -23,15 +23,23 @@ Benchmarks
 Render time of sample scenes on my personal laptop (2.50 Ghz Intel Core i7-4710 CPU)
 
 Materials:
+
 1920 x 1080 - 13.44 s
+
 1280 x 720  - 5.67 s
+
 640 x 480   - 2.02 s
+
 160 x 120   - 150 ms
 
 Magic Window:
+
 1920 x 1080 - 1.56 s
+
 1280 x 720  - 706 ms
+
 640 x 480   - 245 ms
+
 160 x 120   - 20 ms
 
 TODO list
