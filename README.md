@@ -17,6 +17,12 @@ Currently supported ```SurfaceMaterial``` types are: ```SurfaceDiffuse```, ```Su
 
 The scene initialization code is located in App.xaml.cs file.
 
+Screenshots
+-----------
+
+![Materials sample scene](/materials.png)
+![MagicWindow sample scene](/window.png)
+
 Benchmarks
 ----------
 
