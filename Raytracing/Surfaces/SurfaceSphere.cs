@@ -10,6 +10,7 @@ namespace Raytracing.Surfaces
     public class SurfaceSphere : SurfaceGeometry
     {
         private readonly double radiusSquared;
+        private readonly double invRadius;
         private Vector3 center;
 
         private const double PRECISION = 1e-5;
@@ -17,6 +18,7 @@ namespace Raytracing.Surfaces
         public SurfaceSphere(Vector3 center, double radius)
         {
             this.center = center;
+            invRadius = 1 / radius;
             radiusSquared = radius * radius;
         }
 
@@ -51,7 +53,7 @@ namespace Raytracing.Surfaces
 
         public override Vector3 calculateNormal(Vector3 point)
         {
-            return point - center;
+            return invRadius * (point - center);
         }
     }
 }

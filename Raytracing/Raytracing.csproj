@@ -65,11 +65,11 @@
     <Compile Include="Render.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Surfaces\Surface.cs" />
-    <Compile Include="Surfaces\SurfaceDiffuse.cs" />
+    <Compile Include="Surfaces\SurfaceUnlit.cs" />
     <Compile Include="Surfaces\SurfaceFloor.cs" />
     <Compile Include="Surfaces\SurfaceGeometry.cs" />
     <Compile Include="Surfaces\SurfaceMaterial.cs" />
-    <Compile Include="Surfaces\SurfaceMaterialProduct.cs" />
+    <Compile Include="Surfaces\SurfaceMaterialBlend.cs" />
     <Compile Include="Surfaces\SurfacePlane.cs" />
     <Compile Include="Surfaces\SurfaceReflective.cs" />
     <Compile Include="Surfaces\SurfaceSphere.cs" />

@@ -1,4 +1,5 @@
 ﻿using Raytracing.Algebra;
+using System;
 
 namespace Raytracing
 {
@@ -15,14 +16,14 @@ namespace Raytracing
             B = b;
         }
 
-        public static Color operator *(Vector3 a, Color b)
+        public Vector3 toVector()
         {
-            return new Color((byte)(a.x * b.R), (byte)(a.y * b.G), (byte)(a.z * b.B));
+            return new Vector3((float)R / 255, (float)G / 255, (float)B / 255);
         }
 
-        public static Color operator +(Color a, Color b)
+        public static Color fromVector(Vector3 v)
         {
-            return new Color((byte)(a.R + b.R), (byte)(a.G + b.G), (byte)(a.B + b.B));
+            return new Color((byte)Math.Min(255, v.x * 255), (byte)Math.Min(255, v.y * 255), (byte)Math.Min(255, v.z * 255));
         }
 
         public override string ToString()

@@ -10,12 +10,12 @@ namespace Raytracing
         public const int MAX_GENERATIONS = 8;
 
         private readonly List<Surface> surfaces;
-        private readonly Color skyColor;
+        private readonly Vector3 skyColor;
 
 
         public Scene(Color skyColor)
         {
-            this.skyColor = skyColor;
+            this.skyColor = skyColor.toVector();
             surfaces = new List<Surface>();
         }
 
@@ -25,7 +25,7 @@ namespace Raytracing
         }
 
 
-        public Color castRay(Ray ray, int generation)
+        public Vector3 castRay(Ray ray, int generation)
         {
             //Console.WriteLine("Generation " + generation.ToString() + " Ray: " + ray.ToString());
 
@@ -51,7 +51,7 @@ namespace Raytracing
                 return skyColor;
 
             if (generation > MAX_GENERATIONS)
-                return new Color(0, 0, 0);
+                return skyColor;
             return hitSurface.Material.propagateRay(
                 ray, firstCollision.HitPoint, hitSurface.Geometry.calculateNormal(firstCollision.HitPoint), generation + 1);
         }
