@@ -21,7 +21,7 @@ namespace Raytracing
             return new Vector3((float)R / 255, (float)G / 255, (float)B / 255);
         }
 
-        public static Color fromVector(Vector3 v)
+        public static Color FromVector(Vector3 v)
         {
             return new Color((byte)Math.Min(255, v.x * 255), (byte)Math.Min(255, v.y * 255), (byte)Math.Min(255, v.z * 255));
         }

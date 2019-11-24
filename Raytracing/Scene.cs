@@ -12,7 +12,6 @@ namespace Raytracing
         private readonly List<Surface> surfaces;
         private readonly Vector3 skyColor;
 
-
         public Scene(Color skyColor)
         {
             this.skyColor = skyColor.toVector();
@@ -54,6 +53,17 @@ namespace Raytracing
                 return skyColor;
             return hitSurface.Material.propagateRay(
                 ray, firstCollision.HitPoint, hitSurface.Geometry.calculateNormal(firstCollision.HitPoint), generation + 1);
+        }
+
+        public bool checkSkyVisibility(Ray ray)
+        {
+            foreach (Surface surface in surfaces)
+            {
+                CollisionInfo collision = surface.Geometry.calculateCollision(ray);
+                if (collision.Occured)
+                    return false;
+            }
+            return true;
         }
     }
 }

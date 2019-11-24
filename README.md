@@ -13,7 +13,7 @@ You can add ```Surface``` objects to the scene. ```Surface``` objects are compos
 
 Currently supported ```SurfaceGeometry``` types are: ```SurfaceSphere```, ```SurfacePlane``` and ```SurfaceFloor```.
 
-Currently supported ```SurfaceMaterial``` types are: ```SurfaceDiffuse```, ```SurfaceReflective```, ```SurfaceTransparent``` and ```SurfaceMaterialProduct``` (blends two materials with specified ratio).
+Currently supported ```SurfaceMaterial``` types are: ```SurfaceUnlit```, ```SurfaceDiffuse```, ```SurfaceReflective```, ```SurfaceTransparent``` and ```SurfaceMaterialBlend```.
 
 The scene initialization code is located in App.xaml.cs file.
 
@@ -21,6 +21,7 @@ Screenshots
 -----------
 
 ![Materials sample scene](/materials.png)
+![Lighting2 sample scene](/lighting2.png)
 ![MagicWindow sample scene](/window.png)
 
 Benchmarks
@@ -51,5 +52,5 @@ Magic Window:
 TODO list
 ---------
 - meshes
-- shading and more materials
+- more realistic lighting and more materials
 - calculating stuff on GPU (and other optimisations)
