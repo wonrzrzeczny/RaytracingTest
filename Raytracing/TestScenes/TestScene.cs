@@ -2,16 +2,12 @@
 using Raytracing.Lighting;
 using Raytracing.Surfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Raytracing
+namespace Raytracing.TestScenes
 {
-    public static class TestScenes
+    public static partial class TestScene
     {
-		//Scene presenting different materials
+        //Scene presenting different materials
         public static Scene Materials()
         {
             Random random = new Random();

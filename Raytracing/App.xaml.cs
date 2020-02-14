@@ -1,14 +1,6 @@
 ﻿using Raytracing.Algebra;
-using Raytracing.Surfaces;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using Raytracing.TestScenes;
 using System.Windows;
-using System.Windows.Media;
 
 namespace Raytracing
 {
@@ -26,7 +18,7 @@ namespace Raytracing
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
-            scene = TestScenes.Materials();
+            scene = TestScene.Boolean(false);
             camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);
             render = new Render(camera, resX, resY);
 
