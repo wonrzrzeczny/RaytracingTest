@@ -20,25 +20,20 @@ namespace Raytracing.Surfaces
         public override CollisionInfo calculateCollision(Ray ray)
         {
             if (Math.Abs(ray.Direction.y) < double.Epsilon)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
             double t = (y - ray.Origin.y) / ray.Direction.y;
             if (t < double.Epsilon)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
 
             double x = ray.Origin.x + t * ray.Direction.x;
             if (x < x1 || x > x2)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
 
             double z = ray.Origin.z + t * ray.Direction.z;
             if (z < z1 || z > z2)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
 
-            return new CollisionInfo(true, new Vector3(x, y, z));
-        }
-
-        public override Vector3 calculateNormal(Vector3 point)
-        {
-            return Vector3.Up;
+            return new CollisionInfo(true, new Vector3(x, y, z), Vector3.Up);
         }
     }
 }

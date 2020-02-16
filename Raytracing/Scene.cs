@@ -51,8 +51,7 @@ namespace Raytracing
 
             if (generation > MAX_GENERATIONS)
                 return skyColor;
-            return hitSurface.Material.propagateRay(
-                ray, firstCollision.HitPoint, hitSurface.Geometry.calculateNormal(firstCollision.HitPoint), generation + 1);
+            return hitSurface.Material.propagateRay(ray, firstCollision.HitPoint, firstCollision.Normal, generation + 1);
         }
 
         public bool checkSkyVisibility(Ray ray)

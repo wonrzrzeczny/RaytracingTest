@@ -31,17 +31,12 @@ namespace Raytracing.Surfaces
         {
             double d = Vector3.Dot(normal, ray.Direction);
             if (Math.Abs(d) < double.Epsilon)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
             double t = (orthDistance - Vector3.Dot(normal, ray.Origin)) / d;
             if (t < PRECISION)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
 
-            return new CollisionInfo(true, ray.Origin + t * ray.Direction);
-        }
-
-        public override Vector3 calculateNormal(Vector3 point)
-        {
-            return normal;
+            return new CollisionInfo(true, ray.Origin + t * ray.Direction, normal);
         }
     }
 }

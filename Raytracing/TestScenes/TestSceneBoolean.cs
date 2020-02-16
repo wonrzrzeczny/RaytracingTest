@@ -75,23 +75,20 @@ namespace Raytracing.TestScenes
             List<double> col2 = s2.calculateCollision(ray);
 
             if (col1.Count == 0 || col2.Count == 0)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
 
             if (col1[1] < col2[0] || col2[1] < col1[0])
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
 
             double t = Math.Max(col1[0], col2[0]);
-            if (t < 0)
-                return new CollisionInfo(false, null);
+            if (t > 0)
+            {
+                Vector3 hitPosition = ray.Origin + t * ray.Direction;
+                Vector3 normal = s1.isOnSurface(hitPosition) ? s1.calculateNormal(hitPosition) : s2.calculateNormal(hitPosition);
+                return new CollisionInfo(true, hitPosition, normal);
+            }
 
-            return new CollisionInfo(true, ray.Origin + t * ray.Direction);
-        }
-
-        public override Vector3 calculateNormal(Vector3 point)
-        {
-            if (s1.isOnSurface(point))
-                return s1.calculateNormal(point);
-            else return s2.calculateNormal(point);
+            return new CollisionInfo(false);
         }
     }
 
@@ -111,7 +108,7 @@ namespace Raytracing.TestScenes
             List<double> col2 = s2.calculateCollision(ray);
 
             if (col1.Count == 0)
-                return new CollisionInfo(false, null);
+                return new CollisionInfo(false);
             
             double t = double.MinValue;
             if (col2.Count == 0)
@@ -127,15 +124,13 @@ namespace Raytracing.TestScenes
             }
 
             if (t > 0)
-                return new CollisionInfo(true, ray.Origin + t * ray.Direction);
-            return new CollisionInfo(false, null);
-        }
+            {
+                Vector3 hitPosition = ray.Origin + t * ray.Direction;
+                Vector3 normal = s1.isOnSurface(hitPosition) ? s1.calculateNormal(hitPosition) : s2.calculateNormal(hitPosition);
+                return new CollisionInfo(true, hitPosition, normal);
+            }
 
-        public override Vector3 calculateNormal(Vector3 point)
-        {
-            if (s1.isOnSurface(point))
-                return s1.calculateNormal(point);
-            else return -s2.calculateNormal(point);
+            return new CollisionInfo(false);
         }
     }
 
