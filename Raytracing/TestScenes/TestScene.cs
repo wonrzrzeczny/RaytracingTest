@@ -83,10 +83,17 @@ namespace Raytracing.TestScenes
             SurfaceMaterial diffuseBlue = new SurfaceDiffuse(new Color(50, 50, 255), lightGroup);
             SurfaceMaterial diffuseWhite = new SurfaceDiffuse(new Color(255, 255, 255), lightGroup);
 
-            scene.addSurface(new Surface(new SurfacePlane(-25 * Vector3.Up, Vector3.Forward, Vector3.Right), diffuseWhite));
-            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(-40, 0, 80), 10), diffuseRed));
-            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(0, 0, 80), 10), diffuseGreen));
-            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(40, 0, 80), 10), diffuseBlue));
+            SurfaceMaterial specular = new SurfaceSpecular(new Color(100, 100, 100), 50, lightGroup);
+
+            SurfaceMaterial red = new SurfaceMaterialSum(specular, diffuseRed);
+            SurfaceMaterial blue = new SurfaceMaterialSum(specular, diffuseBlue);
+            SurfaceMaterial green = new SurfaceMaterialSum(specular, diffuseGreen);
+            SurfaceMaterial white = new SurfaceMaterialSum(specular, diffuseWhite);
+
+            scene.addSurface(new Surface(new SurfacePlane(-25 * Vector3.Up, Vector3.Forward, Vector3.Right), white));
+            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(-40, 0, 80), 10), red));
+            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(0, 0, 80), 10), green));
+            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(40, 0, 80), 10), blue));
 
             return scene;
         }

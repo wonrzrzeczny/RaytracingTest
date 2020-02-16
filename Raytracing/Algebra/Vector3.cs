@@ -88,6 +88,11 @@ namespace Raytracing.Algebra
             return new Vector3(d * a.x, d * a.y, d * a.z);
         }
 
+        public static Vector3 operator *(Vector3 a, double d)
+        {
+            return new Vector3(d * a.x, d * a.y, d * a.z);
+        }
+
         public static Vector3 operator *(Vector3 a, Vector3 b)
         {
             return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);

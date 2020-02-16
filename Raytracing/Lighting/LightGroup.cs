@@ -22,11 +22,15 @@ namespace Raytracing.Lighting
             lights.Add(light);
         }
 
-        public Vector3 calculateColor(Vector3 point, Vector3 normal)
+        public Vector3 calculateColor(Vector3 point, Vector3 normal, ILightEvaluator lightEvaluator)
         {
             Vector3 result = Vector3.Zero;
             foreach (Light light in lights)
-                result += light.calculateColor(point, normal);
+            {
+                Vector3 intensity = light.calculateIntensity(point);
+                Vector3 color = lightEvaluator.evaluate(intensity, light.calculateLightDirection(point), normal);
+                result += color;
+            }
             return result;
         }
     }

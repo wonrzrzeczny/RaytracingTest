@@ -63,6 +63,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CollisionInfo.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="Lighting\ILightEvaluator.cs" />
     <Compile Include="Lighting\Light.cs" />
     <Compile Include="Lighting\LightDirectional.cs" />
     <Compile Include="Lighting\LightGroup.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="Surfaces\Mesh\SurfaceMesh.cs" />
     <Compile Include="Surfaces\Surface.cs" />
     <Compile Include="Surfaces\SurfaceDiffuse.cs" />
+    <Compile Include="Surfaces\SurfaceMaterialSum.cs" />
+    <Compile Include="Surfaces\SurfaceSpecular.cs" />
     <Compile Include="Surfaces\SurfaceTriangle.cs" />
     <Compile Include="Surfaces\SurfaceUnlit.cs" />
     <Compile Include="Surfaces\SurfaceFloor.cs" />

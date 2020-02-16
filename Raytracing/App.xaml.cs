@@ -18,7 +18,7 @@ namespace Raytracing
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
-            scene = TestScene.Boolean(false);
+            scene = TestScene.Lighting1();
             camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);
             render = new Render(camera, resX, resY);
 

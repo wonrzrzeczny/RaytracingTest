@@ -1,5 +1,4 @@
 ﻿using Raytracing.Algebra;
-using System;
 
 namespace Raytracing.Lighting
 {
@@ -20,12 +19,17 @@ namespace Raytracing.Lighting
             this.castShadows = castShadows;
         }
 
-        public LightDirectional(Color color, Vector3 direction, Scene scene) : this(color, direction, scene, true) { }
+        public LightDirectional(Color color, Vector3 direction, Scene scene) : this(color, direction, scene, false) { }
 
-        public override Vector3 calculateColor(Vector3 point, Vector3 normal)
+        public override Vector3 calculateIntensity(Vector3 point)
         {
             double visibility = castShadows ? (scene.checkSkyVisibility(new Ray(point + SKIP * (-direction), -direction)) ? 1 : 0) : 1;
-            return visibility * Math.Max(0, Vector3.Dot(normal, -direction)) * color;
+            return visibility * color;
+        }
+
+        public override Vector3 calculateLightDirection(Vector3 point)
+        {
+            return direction;
         }
     }
 }
