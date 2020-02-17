@@ -90,15 +90,21 @@ namespace Raytracing.Algebra
             double s = Math.Sin(angle);
             return new Matrix4(new double[4, 4] { { c, -s, 0, 0 }, { s, c, 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } });
         }
-
+        
+        // Kinda wonky at the moment
         public static Matrix4 Rotate(double yaw, double pitch, double roll)
         {
-            return BasicRotationY(yaw) * BasicRotationZ(pitch) * BasicRotationX(roll);
+            return BasicRotationY(yaw) * BasicRotationX(pitch) * BasicRotationZ(roll);
         }
 
         public static Matrix4 Rotate(double yaw, double pitch)
         {
-            return BasicRotationY(yaw) * BasicRotationZ(pitch);
+            return BasicRotationY(yaw) * BasicRotationX(pitch);
+        }
+
+        public static Matrix4 Rotate(Vector3 angles)
+        {
+            return BasicRotationY(angles.y) * BasicRotationZ(angles.z) * BasicRotationX(angles.x);
         }
     }
 }

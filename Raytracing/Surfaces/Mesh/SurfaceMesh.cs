@@ -12,12 +12,16 @@ namespace Raytracing.Surfaces.Mesh
         private readonly int[,] faces;
         private readonly Triangle[] triangles;
 
-        public SurfaceMesh(Vector3[] vertices, int[,] faces, Vector3 position)
+        public SurfaceMesh(Vector3[] vertices, int[,] faces) : this(vertices, faces, Vector3.Zero, Vector3.Zero) { }
+
+        public SurfaceMesh(Vector3[] vertices, int[,] faces, Vector3 position) : this(vertices, faces, position, Vector3.Zero) { }
+
+        public SurfaceMesh(Vector3[] vertices, int[,] faces, Vector3 position, Vector3 rotation)
         {
             this.vertices = new Vector3[vertices.Length];
             for (int i = 0; i < vertices.Length; i++)
             {
-                this.vertices[i] = vertices[i] + position;
+                this.vertices[i] = Matrix4.Translate(position) * Matrix4.Rotate(rotation) * vertices[i];
             }
 
             this.faces = faces;
