@@ -17,8 +17,8 @@ namespace Raytracing
         Scene scene;
         Camera camera;
 
-        public const int resX = 640;
-        public const int resY = 320;
+        public const int resX = 1280;
+        public const int resY = 720;
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
@@ -36,7 +36,7 @@ namespace Raytracing
             LightGroup lightGroup = new LightGroup();
             lightGroup.addLight(new LightDirectional(new Color(255, 255, 255), new Vector3(0.2, -0.2, 1), scene));
 
-            SurfaceGeometry geometry = new SurfaceMesh(mesh, Vector3.Forward * 10, new Vector3(0, Math.PI, 0));//, Vector3.Zero * (Math.PI / 4));
+            SurfaceGeometry geometry = new SurfaceMesh(mesh, Vector3.Forward * 10, new Vector3(0, Math.PI, 0), SurfaceMesh.NormalMode.PER_VERTEX);//, Vector3.Zero * (Math.PI / 4));
             SurfaceMaterial material = new SurfaceDiffuse(new Color(255, 255, 255), lightGroup);
 
             scene.addSurface(new Surface(geometry, material));

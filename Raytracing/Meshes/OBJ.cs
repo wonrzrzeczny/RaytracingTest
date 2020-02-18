@@ -17,7 +17,7 @@ namespace Raytracing.Meshes
             {
                 string[] lineData = line.Replace('.', ',').Split(' ');
 
-                if (line.StartsWith("v"))
+                if (line.StartsWith("v "))
                 {
                     double x = double.Parse(lineData[1]);
                     double y = double.Parse(lineData[2]);
@@ -25,7 +25,7 @@ namespace Raytracing.Meshes
                     vertexList.Add(new Vector3(x, y, z));
                 }
 
-                if (line.StartsWith("f"))
+                if (line.StartsWith("f "))
                 {
                     int v0 = int.Parse(lineData[1].Split('/')[0]) - 1;
                     for (int i = 3; i < lineData.Length; i++)

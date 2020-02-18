@@ -31,8 +31,8 @@
             double dotp2 = Vector3.Dot(v - V0, V2 - V0);
             double bar1 = (dot22 * dotp1 - dot12 * dotp2) / det;
             double bar2 = (dot11 * dotp2 - dot12 * dotp1) / det;
-            double bar3 = 1 - bar1 - bar2;
-            return new Vector3(bar1, bar2, bar3);
+            double bar0 = 1 - bar1 - bar2;
+            return new Vector3(bar0, bar1, bar2);
         }
 
         public Vector3 fromBaricentric(Vector3 v)
