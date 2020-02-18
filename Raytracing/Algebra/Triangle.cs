@@ -17,7 +17,7 @@
             V1 = v1;
             V2 = v2;
 
-            Normal = -Vector3.Cross(v1 - v0, v2 - v0).normalized();
+            Normal = Vector3.Cross(v1 - v0, v2 - v0).normalized();
             OrthDistance = Vector3.Dot(Normal, v0);
             dot11 = Vector3.Dot(v1 - v0, v1 - v0);
             dot22 = Vector3.Dot(v2 - v0, v2 - v0);

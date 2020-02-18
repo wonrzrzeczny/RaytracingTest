@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Raytracing.Algebra;
+using Raytracing.Meshes;
 
-namespace Raytracing.Surfaces.Mesh
+namespace Raytracing.Surfaces
 {
     public class SurfaceMesh : SurfaceGeometry
     {
@@ -12,24 +13,24 @@ namespace Raytracing.Surfaces.Mesh
         private readonly int[,] faces;
         private readonly Triangle[] triangles;
 
-        public SurfaceMesh(Vector3[] vertices, int[,] faces) : this(vertices, faces, Vector3.Zero, Vector3.Zero) { }
+        public SurfaceMesh(Mesh mesh) : this(mesh, Vector3.Zero, Vector3.Zero) { }
 
-        public SurfaceMesh(Vector3[] vertices, int[,] faces, Vector3 position) : this(vertices, faces, position, Vector3.Zero) { }
+        public SurfaceMesh(Mesh mesh, Vector3 position) : this(mesh, position, Vector3.Zero) { }
 
-        public SurfaceMesh(Vector3[] vertices, int[,] faces, Vector3 position, Vector3 rotation)
+        public SurfaceMesh(Mesh mesh, Vector3 position, Vector3 rotation)
         {
-            this.vertices = new Vector3[vertices.Length];
+            vertices = mesh.getVertices();
             for (int i = 0; i < vertices.Length; i++)
             {
-                this.vertices[i] = Matrix4.Translate(position) * Matrix4.Rotate(rotation) * vertices[i];
+                vertices[i] = Matrix4.Translate(position) * Matrix4.Rotate(rotation) * vertices[i];
             }
 
-            this.faces = faces;
+            faces = mesh.getFaces();
 
             triangles = new Triangle[faces.GetLength(0)];
             for (int i = 0; i < triangles.Length; i++)
             {
-                triangles[i] = new Triangle(this.vertices[faces[i, 0]], this.vertices[faces[i, 1]], this.vertices[faces[i, 2]]);
+                triangles[i] = new Triangle(vertices[faces[i, 0]], vertices[faces[i, 1]], vertices[faces[i, 2]]);
             }
         }
 

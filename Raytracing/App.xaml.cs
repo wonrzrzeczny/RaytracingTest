@@ -1,7 +1,7 @@
 ﻿using Raytracing.Algebra;
 using Raytracing.Lighting;
+using Raytracing.Meshes;
 using Raytracing.Surfaces;
-using Raytracing.Surfaces.Mesh;
 using Raytracing.TestScenes;
 using System;
 using System.Windows;
@@ -17,8 +17,8 @@ namespace Raytracing
         Scene scene;
         Camera camera;
 
-        public const int resX = 1280;
-        public const int resY = 720;
+        public const int resX = 640;
+        public const int resY = 320;
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
@@ -31,13 +31,15 @@ namespace Raytracing
                                         { 0, 4, 2 }, { 6, 2, 4 }, { 3, 5, 1 }, { 5, 3, 7 },
                                         { 0, 2, 1 }, { 3, 1, 2 }, { 5, 6, 4 }, { 6, 5, 7 } };
 
+            Mesh mesh = OBJ.ParseFile(@"..\..\monkey.obj");
+
             LightGroup lightGroup = new LightGroup();
             lightGroup.addLight(new LightDirectional(new Color(255, 255, 255), new Vector3(0.2, -0.2, 1), scene));
 
-            SurfaceGeometry mesh = new SurfaceMesh(vertices, faces, Vector3.Forward * 10, Vector3.One * (Math.PI / 4));
+            SurfaceGeometry geometry = new SurfaceMesh(mesh, Vector3.Forward * 10, new Vector3(0, Math.PI, 0));//, Vector3.Zero * (Math.PI / 4));
             SurfaceMaterial material = new SurfaceDiffuse(new Color(255, 255, 255), lightGroup);
 
-            scene.addSurface(new Surface(mesh, material));
+            scene.addSurface(new Surface(geometry, material));
             //scene.addSurface(new Surface(new SurfaceSphere(Vector3.Forward * 10, 1), material));
 
             camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);

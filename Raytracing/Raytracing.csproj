@@ -67,9 +67,11 @@
     <Compile Include="Lighting\Light.cs" />
     <Compile Include="Lighting\LightDirectional.cs" />
     <Compile Include="Lighting\LightGroup.cs" />
+    <Compile Include="Meshes\Mesh.cs" />
+    <Compile Include="Meshes\OBJ.cs" />
     <Compile Include="Render.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="Surfaces\Mesh\SurfaceMesh.cs" />
+    <Compile Include="Surfaces\SurfaceMesh.cs" />
     <Compile Include="Surfaces\Surface.cs" />
     <Compile Include="Surfaces\SurfaceDiffuse.cs" />
     <Compile Include="Surfaces\SurfaceMaterialSum.cs" />
@@ -125,5 +127,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
