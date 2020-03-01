@@ -18,17 +18,17 @@ namespace Raytracing.Surfaces
         {
             double d = Vector3.Dot(triangle.Normal, ray.Direction);
             if (Math.Abs(d) < double.Epsilon)
-                return new CollisionInfo(false);
+                return noCollision();
             double t = (triangle.OrthDistance - Vector3.Dot(triangle.Normal, ray.Origin)) / d;
             if (t < PRECISION)
-                return new CollisionInfo(false);
+                return noCollision();
 
             Vector3 p = ray.Origin + t * ray.Direction;
             Vector3 bar = triangle.toBaricentric(p);
             
             if (bar.x < -PRECISION || bar.y < -PRECISION || bar.z < -PRECISION)
-                return new CollisionInfo(false);
-            return new CollisionInfo(true, p, triangle.Normal);
+                return noCollision();
+            return makeCollision(p, triangle.Normal);
         }
     }
 }

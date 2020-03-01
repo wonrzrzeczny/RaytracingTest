@@ -25,7 +25,7 @@ namespace Raytracing.Surfaces
         public override CollisionInfo calculateCollision(Ray ray)
         {
             if ((ray.Origin - center).sqrMagnitude() < radiusSquared)
-                return new CollisionInfo(false);
+                return noCollision();
 
             double ox = ray.Origin.x - center.x;
             double oy = ray.Origin.y - center.y;
@@ -39,7 +39,7 @@ namespace Raytracing.Surfaces
             double c = ox * ox + oy * oy + oz * oz - radiusSquared;
             double delta = b * b - 4 * a * c;
             if (delta < double.Epsilon)
-                return new CollisionInfo(false);
+                return noCollision();
             double sdelta = Math.Sqrt(delta);
             double t1 = (-b - sdelta) / (2 * a);
             double t2 = (-b + sdelta) / (2 * a);
@@ -47,16 +47,16 @@ namespace Raytracing.Surfaces
             {
                 Vector3 hitPoint = ray.Origin + t1 * ray.Direction;
                 Vector3 normal = invRadius * (hitPoint - center);
-                return new CollisionInfo(true, hitPoint, normal);
+                return makeCollision(hitPoint, normal);
             }
             if (t2 > PRECISION)
             {
                 Vector3 hitPoint = ray.Origin + t2 * ray.Direction;
                 Vector3 normal = invRadius * (hitPoint - center);
-                return new CollisionInfo(true, hitPoint, normal);
+                return makeCollision(hitPoint, normal);
             }
 
-            return new CollisionInfo(false);
+            return noCollision();
         }
     }
 }

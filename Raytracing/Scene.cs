@@ -41,7 +41,7 @@ namespace Raytracing
                     {
                         distance = newDistance;
                         firstCollision = collision;
-                        hitSurface = surface;
+                        hitSurface = firstCollision.Surface ?? surface;
                     }
                 }
             }

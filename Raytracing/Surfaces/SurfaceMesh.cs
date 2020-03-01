@@ -99,7 +99,7 @@ namespace Raytracing.Surfaces
             }
 
             if (t < PRECISION)
-                return new CollisionInfo(false);
+                return noCollision();
 
             Vector3 hitNormal;
             if (normalMode == NormalMode.PER_FACE)
@@ -114,7 +114,7 @@ namespace Raytracing.Surfaces
                 hitNormal = hitPointBaricentric.x * n0 + hitPointBaricentric.y * n1 + hitPointBaricentric.z * n2;
                 hitNormal = hitNormal.normalized();
             }
-            return new CollisionInfo(true, hitPoint, hitNormal);
+            return makeCollision(hitPoint, hitNormal);
         }
     }
 }

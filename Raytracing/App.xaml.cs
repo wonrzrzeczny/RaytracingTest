@@ -36,11 +36,16 @@ namespace Raytracing
             LightGroup lightGroup = new LightGroup();
             lightGroup.addLight(new LightDirectional(new Color(255, 255, 255), new Vector3(0.2, -0.2, 1), scene));
 
-            SurfaceGeometry geometry = new SurfaceMesh(mesh, Vector3.Forward * 10, new Vector3(0, Math.PI, 0), SurfaceMesh.NormalMode.PER_VERTEX);//, Vector3.Zero * (Math.PI / 4));
-            SurfaceMaterial material = new SurfaceDiffuse(new Color(255, 255, 255), lightGroup);
+            SurfaceGeometry geometry = new SurfaceMesh(mesh, Vector3.Forward * 10, new Vector3(0, Math.PI, 0), SurfaceMesh.NormalMode.PER_VERTEX);
 
-            scene.addSurface(new Surface(geometry, material));
-            //scene.addSurface(new Surface(new SurfaceSphere(Vector3.Forward * 10, 1), material));
+            SurfaceMaterial diffuse = new SurfaceDiffuse(new Color(200, 212, 180), lightGroup);
+            SurfaceMaterial specular = new SurfaceSpecular(new Color(255, 255, 255), 150, lightGroup);
+            SurfaceMaterial material = new SurfaceMaterialSum(diffuse, specular);
+
+            Surface monkey = new Surface(geometry, material);
+            Surface boundedMonkey = new Surface(new SurfaceBoundingVolume(new SurfaceSphere(Vector3.Forward * 10, 2.5), monkey), null);
+
+            scene.addSurface(boundedMonkey);
 
             camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);
             render = new Render(camera, resX, resY);

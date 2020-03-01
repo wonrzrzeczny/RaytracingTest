@@ -9,6 +9,7 @@
         {
             Geometry = geometry;
             Material = material;
+            Geometry.Surface = this;
         }
     }
 }
