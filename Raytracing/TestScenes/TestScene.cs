@@ -1,5 +1,6 @@
 ﻿using Raytracing.Algebra;
 using Raytracing.Lighting;
+using Raytracing.Meshes;
 using Raytracing.Surfaces;
 using System;
 
@@ -113,6 +114,29 @@ namespace Raytracing.TestScenes
 
             scene.addSurface(new Surface(new SurfacePlane(-25 * Vector3.Up, Vector3.Forward, Vector3.Right), diffuseWhite));
             scene.addSurface(new Surface(new SurfaceSphere(new Vector3(0, 0, 80), 10), diffuseWhite));
+
+            return scene;
+        }
+
+        public static Scene Mesh()
+        {
+            Scene scene = new Scene(new Color(255, 255, 255));
+            
+            Mesh mesh = OBJ.ParseFile(@"..\..\monkey.obj");
+
+            LightGroup lightGroup = new LightGroup();
+            lightGroup.addLight(new LightDirectional(new Color(255, 255, 255), new Vector3(0.2, -0.2, 1), scene));
+
+            SurfaceGeometry geometry = new SurfaceMesh(mesh, Vector3.Forward * 10, new Vector3(0, Math.PI, 0), SurfaceMesh.NormalMode.PER_VERTEX);
+
+            SurfaceMaterial diffuse = new SurfaceDiffuse(new Color(200, 212, 180), lightGroup);
+            SurfaceMaterial specular = new SurfaceSpecular(new Color(255, 255, 255), 150, lightGroup);
+            SurfaceMaterial material = new SurfaceMaterialSum(diffuse, specular);
+
+            Surface monkey = new Surface(geometry, material);
+            //We enclose the monkey in a bounding sphere, which speeds up the rendering over 7 times
+            Surface boundedMonkey = new Surface(new SurfaceBoundingVolume(new SurfaceSphere(Vector3.Forward * 10, 2.5), monkey), null);
+            scene.addSurface(boundedMonkey);
 
             return scene;
         }

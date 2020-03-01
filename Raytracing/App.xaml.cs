@@ -22,30 +22,7 @@ namespace Raytracing
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
-            scene = new Scene(new Color(255, 255, 255));
-
-            Vector3[] vertices = new Vector3[] { new Vector3(-1, -1, -1), new Vector3(-1, -1, 1), new Vector3(-1, 1, -1), new Vector3(-1, 1, 1),
-                                                 new Vector3(1, -1, -1),  new Vector3(1, -1, 1),  new Vector3(1, 1, -1),  new Vector3(1, 1, 1) };
-
-            int[,] faces = new int[,] { { 0, 1, 4 }, { 5, 4, 1 }, { 6, 3, 2 }, { 3, 6, 7 },
-                                        { 0, 4, 2 }, { 6, 2, 4 }, { 3, 5, 1 }, { 5, 3, 7 },
-                                        { 0, 2, 1 }, { 3, 1, 2 }, { 5, 6, 4 }, { 6, 5, 7 } };
-
-            Mesh mesh = OBJ.ParseFile(@"..\..\monkey.obj");
-
-            LightGroup lightGroup = new LightGroup();
-            lightGroup.addLight(new LightDirectional(new Color(255, 255, 255), new Vector3(0.2, -0.2, 1), scene));
-
-            SurfaceGeometry geometry = new SurfaceMesh(mesh, Vector3.Forward * 10, new Vector3(0, Math.PI, 0), SurfaceMesh.NormalMode.PER_VERTEX);
-
-            SurfaceMaterial diffuse = new SurfaceDiffuse(new Color(200, 212, 180), lightGroup);
-            SurfaceMaterial specular = new SurfaceSpecular(new Color(255, 255, 255), 150, lightGroup);
-            SurfaceMaterial material = new SurfaceMaterialSum(diffuse, specular);
-
-            Surface monkey = new Surface(geometry, material);
-            Surface boundedMonkey = new Surface(new SurfaceBoundingVolume(new SurfaceSphere(Vector3.Forward * 10, 2.5), monkey), null);
-
-            scene.addSurface(boundedMonkey);
+            scene = TestScene.Mesh();
 
             camera = new Camera(new Vector3(0, 0, 0), 80, resX, resY, scene);
             render = new Render(camera, resX, resY);
