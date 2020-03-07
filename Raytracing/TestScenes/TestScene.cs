@@ -102,25 +102,27 @@ namespace Raytracing.TestScenes
         public static Scene Lighting2()
         {
             Scene scene = new Scene(new Color(255, 255, 255));
-            Light lightRed = new LightDirectional(new Color(255, 0, 0), new Vector3(1, -3, 0), scene);
-            Light lightGreen = new LightDirectional(new Color(0, 255, 0), new Vector3(-1, -3, 0), scene);
-            Light lightBlue = new LightDirectional(new Color(0, 0, 255), new Vector3(0, -3, 1), scene);
+            Light lightRed = new LightDirectional(new Color(255, 0, 0), new Vector3(1, -3, 0), scene, true);
+            Light lightGreen = new LightDirectional(new Color(0, 255, 0), new Vector3(-1, -3, 0), scene, true);
+            Light lightBlue = new LightDirectional(new Color(0, 0, 255), new Vector3(0, -3, 1), scene, true);
             LightGroup lightGroup = new LightGroup();
             lightGroup.addLight(lightRed);
             lightGroup.addLight(lightGreen);
             lightGroup.addLight(lightBlue);
             
             SurfaceMaterial diffuseWhite = new SurfaceDiffuse(new Color(255, 255, 255), lightGroup);
+            SurfaceMaterial specular = new SurfaceSpecular(new Color(100, 100, 100), 50, lightGroup);
+            SurfaceMaterial material = new SurfaceMaterialSum(specular, diffuseWhite);
 
             scene.addSurface(new Surface(new SurfacePlane(-25 * Vector3.Up, Vector3.Forward, Vector3.Right), diffuseWhite));
-            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(0, 0, 80), 10), diffuseWhite));
+            scene.addSurface(new Surface(new SurfaceSphere(new Vector3(0, 0, 80), 10), material));
 
             return scene;
         }
 
         public static Scene Mesh()
         {
-            Scene scene = new Scene(new Color(255, 255, 255));
+            Scene scene = new Scene(new Color(200, 200, 255));
             
             Mesh mesh = OBJ.ParseFile(@"..\..\monkey.obj");
 

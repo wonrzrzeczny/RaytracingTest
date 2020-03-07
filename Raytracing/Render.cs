@@ -32,48 +32,40 @@ namespace Raytracing
             XRes = xRes;
             YRes = yRes;
         }
-
-
+        
         private int colorToInt(Color color)
         {
             return (color.R << 16) + (color.G << 8) + color.B; 
         }
-
-        Random random = new Random();
+        
         public void renderScene()
         {
-            try
+            unsafe
             {
-                bitmap.Lock();
+                int pBackBuffer = 0;
+                Application.Current.Dispatcher.Invoke(
+                    () => { pBackBuffer = (int)bitmap.BackBuffer; }
+                );
 
-                unsafe
+                for (int i = 0; i < YRes; i++)
                 {
-                    // Get a pointer to the back buffer.
-                    int pBackBuffer = (int)bitmap.BackBuffer;
-
-                    for (int i = 0; i < YRes; i++)
+                    for (int j = 0; j < XRes; j++)
                     {
-                        for (int j = 0; j < XRes; j++)
-                        {
-                            // Compute the pixel's color.
-                            Color color = camera.renderPixel(j, i);
-                            int color_data = (color.R << 16) + (color.G << 8) + color.B;// (colorArray[i, j].R << 16) + (colorArray[i, j].G << 8) + colorArray[i, j].B;
+                        Color color = camera.renderPixel(j, i);
+                        int color_data = colorToInt(color);
+                            
+                        Application.Current.Dispatcher.Invoke( () => 
+                            {
+                                bitmap.Lock();
+                                *(int*)pBackBuffer = color_data;
+                                bitmap.AddDirtyRect(new Int32Rect(j, i, 1, 1));
+                                bitmap.Unlock();
+                            }
+                        );
 
-                            // Assign the color data to the pixel.
-                            *(int*)pBackBuffer = color_data;
-
-                            pBackBuffer += 4;
-                        }
+                        pBackBuffer += 4;
                     }
                 }
-
-                // Specify the area of the bitmap that changed.
-                bitmap.AddDirtyRect(new Int32Rect(0, 0, XRes, YRes));
-            }
-            finally
-            {
-                // Release the back buffer and make it available for display.
-                bitmap.Unlock();
             }
         }
     }

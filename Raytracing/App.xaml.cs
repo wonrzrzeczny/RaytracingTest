@@ -3,6 +3,7 @@ using Raytracing.Lighting;
 using Raytracing.Meshes;
 using Raytracing.Surfaces;
 using Raytracing.TestScenes;
+using System.Threading;
 using System;
 using System.Windows;
 
@@ -17,8 +18,8 @@ namespace Raytracing
         Scene scene;
         Camera camera;
 
-        public const int resX = 1280;
-        public const int resY = 720;
+        public const int resX = 640;
+        public const int resY = 480;
 
         public void ApplicationStart(object sender, StartupEventArgs e)
         {
@@ -31,7 +32,9 @@ namespace Raytracing
             window.Content = render.RenderImage;
             window.Show();
 
-            render.renderScene();
+            //we run renderScene in a new thread, so that we can see pixels' colors as soon as they are calculated 
+            Thread thread = new Thread(new ThreadStart(() => render.renderScene()));
+            thread.Start();
         }
     }
 }
