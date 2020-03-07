@@ -13,22 +13,9 @@ namespace Raytracing
         private readonly int resolutionY;
         private readonly Scene scene;
 
-        private Vector3[,] pixelRayDirections;
-
-        private void calculateRayDirections()
-        {
-            pixelRayDirections = new Vector3[resolutionX, resolutionY];
-            double shiftMagnitude = 2 * Math.Tan(FOV * Math.PI / 360) / resolutionX * Direction.magnitude();
-            Vector3 horizontalShift = - shiftMagnitude * Vector3.Cross(Direction, Vector3.Up).normalized();
-            Vector3 verticalShift = - shiftMagnitude * Vector3.Cross(Direction, horizontalShift).normalized();
-            for (int x = 0; x < resolutionX; x++)
-            {
-                for (int y = 0; y < resolutionY; y++)
-                {
-                    pixelRayDirections[x, y] = Direction + (x - resolutionX / 2) * horizontalShift + (y - resolutionY / 2) * verticalShift;
-                }
-            }
-        }
+        private double shiftMagnitude;
+        private Vector3 horizontalShift;
+        private Vector3 verticalShift;
 
         public Camera(Vector3 position, double FOV, int resolutionX, int resolutionY, Scene scene)
         {
@@ -38,13 +25,16 @@ namespace Raytracing
             this.scene = scene;
             this.resolutionX = resolutionX;
             this.resolutionY = resolutionY;
-            calculateRayDirections();
+
+            shiftMagnitude = 2 * Math.Tan(FOV * Math.PI / 360) / resolutionX * Direction.magnitude();
+            horizontalShift = -shiftMagnitude * Vector3.Cross(Direction, Vector3.Up).normalized();
+            verticalShift = -shiftMagnitude * Vector3.Cross(Direction, horizontalShift).normalized();
         }
         
         public Color renderPixel(int x, int y)
         {
-            //Console.WriteLine("\nCast: " + x.ToString() + " " + y.ToString());
-            return Color.FromVector(scene.castRay(new Ray(Position, pixelRayDirections[x, y]), 0));
+            Vector3 pixelRayDirection = Direction + (x - resolutionX / 2) * horizontalShift + (y - resolutionY / 2) * verticalShift;
+            return Color.FromVector(scene.castRay(new Ray(Position, pixelRayDirection), 0));
         }
     }
 }
