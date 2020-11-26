@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,34 +39,45 @@ namespace Raytracing
             return (color.R << 16) + (color.G << 8) + color.B; 
         }
         
-        public void renderScene()
+        public void renderScene(int threadCount)
         {
+            int[,] colorData = new int[XRes, YRes];
+
+            Thread[] threads = new Thread[threadCount];
+            int batchSize = XRes / threadCount;
+            for (int i = 0; i < threadCount; i++)
+            {
+                int _i = i; // Capture into the lambda by copy
+                threads[i] = new Thread(new ThreadStart(() =>
+                {
+                    int xMin = batchSize * _i;
+                    int xMax = Math.Min(batchSize * (_i + 1), XRes);
+                    for (int x = xMin; x < xMax; x++)
+                        for (int y = 0; y < YRes; y++)
+                            colorData[x, y] = colorToInt(camera.renderPixel(x, y));
+                }));
+                threads[i].Start();
+            }
+
+            for (int i = 0; i < threadCount; i++)
+                threads[i].Join();
+
             unsafe
             {
-                int pBackBuffer = 0;
-                Application.Current.Dispatcher.Invoke(
-                    () => { pBackBuffer = (int)bitmap.BackBuffer; }
-                );
+                int pBackBuffer = (int)bitmap.BackBuffer;
+                bitmap.Lock();
 
                 for (int i = 0; i < YRes; i++)
                 {
                     for (int j = 0; j < XRes; j++)
                     {
-                        Color color = camera.renderPixel(j, i);
-                        int color_data = colorToInt(color);
-                            
-                        Application.Current.Dispatcher.Invoke( () => 
-                            {
-                                bitmap.Lock();
-                                *(int*)pBackBuffer = color_data;
-                                bitmap.AddDirtyRect(new Int32Rect(j, i, 1, 1));
-                                bitmap.Unlock();
-                            }
-                        );
-
+                        *(int*)pBackBuffer = colorData[j, i];
                         pBackBuffer += 4;
                     }
                 }
+
+                bitmap.AddDirtyRect(new Int32Rect(0, 0, XRes, YRes));
+                bitmap.Unlock();
             }
         }
     }

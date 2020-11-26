@@ -32,9 +32,8 @@ namespace Raytracing
             window.Content = render.RenderImage;
             window.Show();
 
-            //we run renderScene in a new thread, so that we can see pixels' colors as soon as they are calculated 
-            Thread thread = new Thread(new ThreadStart(() => render.renderScene()));
-            thread.Start();
+            // Run on 8 threads
+            render.renderScene(8);
         }
     }
 }
